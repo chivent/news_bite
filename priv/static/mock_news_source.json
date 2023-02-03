@@ -1,0 +1,266 @@
+{
+  "status": "ok",
+  "totalResults": 37,
+  "articles": [
+  {
+  "source": {
+  "id": null,
+  "name": "YouTube"
+  },
+  "author": null,
+  "title": "Tyre Nichols: Body cam video to be released; Murdaugh murder trial resumes & more | LiveNOW from FOX - LiveNOW from FOX",
+  "description": "Subscribe to LiveNOW from FOX! https://www.youtube.com/livenowfox?sub_confirmation=1Where to watch LiveNOW from FOX: https://www.livenowfox.com/Follow us @Li...",
+  "url": "https://www.youtube.com/watch?v=2TbLj8HPzg0",
+  "urlToImage": "https://i.ytimg.com/vi/2TbLj8HPzg0/maxresdefault_live.jpg",
+  "publishedAt": "2023-01-27T12:00:27Z",
+  "content": null
+  },
+  {
+  "source": {
+  "id": "cnn",
+  "name": "CNN"
+  },
+  "author": "Travis Caldwell",
+  "title": "A timeline of the investigations into Tyre Nichols' death after a traffic stop and arrest by Memphis police - CNN",
+  "description": "Nearly three weeks after a traffic stop in Memphis resulted in a violent arrest and subsequent death of a driver, police are expected to release police footage of the incident to the public.",
+  "url": "https://www.cnn.com/2023/01/26/us/tyre-nichols-timeline-investigation/index.html",
+  "urlToImage": "https://media.cnn.com/api/v1/images/stellar/prod/230126003946-01-memphis-police-090722-file.jpg?c=16x9&q=w_800,c_fill",
+  "publishedAt": "2023-01-27T11:51:00Z",
+  "content": "Nearly three weeks after a traffic stop in Memphis, Tennessee, resulted in a violent arrest and subsequent death of a driver, police are expected to release footage of the incident to the public. \r\nT… [+7741 chars]"
+  },
+  {
+  "source": {
+  "id": "reuters",
+  "name": "Reuters"
+  },
+  "author": null,
+  "title": "'Trump fatigue' in New Hampshire complicates 2024 White House bid - Reuters.com",
+  "description": "When Donald Trump trounced his Republican rivals in New Hampshire's 2016 primary, the stunning win announced to other states the reality TV showman was a serious contender. Trump went on to capture the Republican nomination and then the White House.",
+  "url": "https://www.reuters.com/world/us/trump-fatigue-new-hampshire-complicates-2024-white-house-bid-2023-01-27/",
+  "urlToImage": "https://www.reuters.com/resizer/xxSoD9Yyje8hXbsHmgmwMqHMQ3E=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/H3CBZYZFDNMGRMPO2TZVVQK4YU.jpg",
+  "publishedAt": "2023-01-27T11:50:00Z",
+  "content": "WEARE, New Hampshire Jan 27 (Reuters) - When Donald Trump trounced his Republican rivals in New Hampshire's 2016 primary, the stunning win announced to other states the reality TV showman was a serio… [+7936 chars]"
+  },
+  {
+  "source": {
+  "id": "cnn",
+  "name": "CNN"
+  },
+  "author": "Diksha Madhok",
+  "title": "Gautam Adani's business loses $50 billion in market value after short seller report - CNN",
+  "description": "Shares in some of Adani Group's companies tumbled 20% in Mumbai on Friday, as the conglomerate continues to grapple with a stock market sell-off this week after a blistering report by a US-based short seller accused it of fraud.",
+  "url": "https://www.cnn.com/2023/01/27/investing/india-adani-stocks-fall-hindenburg-report-intl-hnk/index.html",
+  "urlToImage": "https://media.cnn.com/api/v1/images/stellar/prod/230127025732-01-adani-logo-041321-file.jpg?c=16x9&q=w_800,c_fill",
+  "publishedAt": "2023-01-27T11:15:00Z",
+  "content": "The value of Gautam Adanis business empire has crashed by more than $50 billion this week since Hindenburg Research, a US firm that makes money from short selling, published a blistering report accus… [+2682 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "NDTV News"
+  },
+  "author": null,
+  "title": "Pathaan Box Office Collection Day 2: Shah Rukh Khan's \"Unstoppable\" Film Makes History, Over Rs 200 Crore Worldwide - NDTV Movies",
+  "description": "Pathaan's total India business - Hindi version only - over two days is Rs 123 crore",
+  "url": "https://www.ndtv.com/entertainment/pathaan-box-office-collection-day-2-shah-rukh-khans-unstoppable-film-makes-history-with-rs-68-crore-3728905",
+  "urlToImage": "https://c.ndtvimg.com/2023-01/rlsda8qg_pathaanbo650_625x300_27_January_23.jpg",
+  "publishedAt": "2023-01-27T10:05:27Z",
+  "content": "Pathaan Box Office Report: Shah Rukh Khan in a still from the film\r\nShah Rukh Khan's new release Pathaan made history on its second day at the box office, setting another record with earnings of Rs 6… [+2868 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "DW (English)"
+  },
+  "author": "Deutsche Welle",
+  "title": "Egypt unveils 4,300-year-old mummy, tombs - DW (English)",
+  "description": "Archaeologists found the gold-covered mummy inside a limestone sarcophagus that had remained shut for more than four millennia. It was among a number of recent discoveries, including four tombs found outside Cairo.",
+  "url": "https://www.dw.com/en/egypt-unveils-4300-year-old-mummy-tombs/a-64530366",
+  "urlToImage": "https://static.dw.com/image/64529694_6.jpg",
+  "publishedAt": "2023-01-27T09:10:40Z",
+  "content": "Egypt on Thursday announced a series of new archaeological discoveries found in the Saqqara necropolis south of Cairo, including a mummy said to be 4,300 years old.\r\n\"This mummy may be the oldest and… [+1771 chars]"
+  },
+  {
+  "source": {
+  "id": "al-jazeera-english",
+  "name": "Al Jazeera English"
+  },
+  "author": "Al Jazeera",
+  "title": "Israel air attacks hit Gaza, escalation fears after Jenin raid - Al Jazeera English",
+  "description": "Witnesses reported Israeli drones fired missiles at targets in Gaza followed by fighter jets attacking locations.",
+  "url": "https://www.aljazeera.com/news/2023/1/27/israel-airstrikes-hit-gaza-after-10-palestinians-killed-in-jenin",
+  "urlToImage": "https://www.aljazeera.com/wp-content/uploads/2023/01/2023-01-27T030607Z_862069262_RC2QYY9CPET5_RTRMADP_3_ISRAEL-PALESTINIANS-GAZA.jpg?resize=1920%2C1440",
+  "publishedAt": "2023-01-27T07:35:01Z",
+  "content": "Israel has launched multiple air attacks on the blockaded Gaza Strip a day after Israeli forces killed nine Palestinians including an elderly woman in the Jenin refugee camp, marking one of the deadl… [+5215 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "The Moscow Times"
+  },
+  "author": "Daria Andriievska for AFP",
+  "title": "Russian Missiles Kill 11 in Ukraine After Tank Pledge - The Moscow Times",
+  "description": "A blistering wave of Russian strikes targeting Ukraine's energy infrastructure killed 11 people on Thursday, a day after Germany and the United States pledged heavy tanks for Kyiv.",
+  "url": "https://www.themoscowtimes.com/2023/01/26/russian-missiles-kill-11-in-ukraine-after-tank-pledge-a80051",
+  "urlToImage": "https://static.themoscowtimes.com/image/og/b8/80051__b86ece4a7f0a30f0280d6b08980572dd.jpg",
+  "publishedAt": "2023-01-27T06:41:45Z",
+  "content": "A blistering wave of Russian strikes targeting Ukraine's energy infrastructure killed 11 people on Thursday, a day after Germany and the United States pledged heavy tanks for Kyiv.\r\nThe stepped-up mi… [+4743 chars]"
+  },
+  {
+  "source": {
+  "id": "cnn",
+  "name": "CNN"
+  },
+  "author": "Lauren del Valle, Ray Sanchez",
+  "title": "NYC bike path terror suspect found guilty on all counts in killing of 8 people - CNN",
+  "description": "Sayfullo Saipov was found guilty of murder by a federal jury for using a rented truck to fatally strike eight people on a New York City bike path on Halloween Day in 2017.",
+  "url": "https://www.cnn.com/2023/01/26/us/sayfullo-saipov-nyc-terror-attack-verdict/index.html",
+  "urlToImage": "https://media.cnn.com/api/v1/images/stellar/prod/171031212513-sayfullo-saipov-2016-mug-shot.jpg?c=16x9&q=w_800,c_fill",
+  "publishedAt": "2023-01-27T06:38:00Z",
+  "content": "Sayfullo Saipov was found guilty of murder by a federal jury for using a rented truck to fatally strike eight people on a New York City bike path on Halloween Day in 2017.\r\nJurors deliberated about s… [+3914 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "SamMobile"
+  },
+  "author": "SamMobile, Asif Iqbal Shaik",
+  "title": "Corning and Samsung confirm Galaxy S23 features Gorilla Glass Victus 2 - SamMobile - Samsung news",
+  "description": "Usually, Samsung is the first in the smartphone industry to incorporate Corning's new Gorilla Glass protection. A few months ago, ...",
+  "url": "https://www.sammobile.com/news/samsung-confirm-galaxy-s23-gorilla-glass-victus-2/",
+  "urlToImage": "https://www.sammobile.com/wp-content/uploads/2023/01/Samsung-Galaxy-S23-Series-720x405.jpg",
+  "publishedAt": "2023-01-27T06:22:00Z",
+  "content": "Usually, Samsung is the first in the smartphone industry to incorporate Cornings new Gorilla Glass protection. A few months ago, Corning unveiled Gorilla Glass Victus 2 and promised that it would be … [+1218 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "ESPN"
+  },
+  "author": "Jeff Borzello",
+  "title": "Billy Packer, 82, longtime Final Four basketball analyst, dies - ESPN",
+  "description": "Longtime college basketball commentator Billy Packer, the voice of the NCAA tournament for more than 30 years, died Thursday night. He was 82.",
+  "url": "https://www.espn.com/mens-college-basketball/story/_/id/35535286/billy-packer-82-long-final-four-basketball-analyst-dies",
+  "urlToImage": "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2023%2F0127%2Fr1123045_2_1296x1296_1%2D1.jpg",
+  "publishedAt": "2023-01-27T05:48:45Z",
+  "content": "Longtime college basketball commentator Billy Packer, the voice of the NCAA tournament for more than 30 years, died Thursday night. He was 82.\r\nPacker's two sons, Mark and Brandt, announced the news … [+5647 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "Eurasiantimes.com"
+  },
+  "author": "Tanmay Kadam",
+  "title": "How To Kill An Abrams! Russian ‘Experts’ Issue A Guidebook On Where & How To Destroy The US Main Battle Tank - EurAsian Times",
+  "description": "An image has resurfaced showing vulnerabilities of the American-made M1 Abrams Tanks with instructions on where to hit the Abrams tanks and with what weapons. The image is being circulated by and among Russian netizens shortly after the US agreed to supply Uk…",
+  "url": "https://eurasiantimes.com/how-to-kill-an-abrams-russian-experts-issue-a-guidebook-on-where-how-to-destroy-the-us-main-battle-tank/",
+  "urlToImage": "https://eurasiantimes.com/wp-content/uploads/2023/01/Whwre-to-hit-Abrams.jpg",
+  "publishedAt": "2023-01-27T05:25:30Z",
+  "content": "An image has resurfaced on social media showing vulnerabilities of the American-made M1 Abrams Tanks with instructions on where to hit the tank and using what weapons. \r\nUS President Joe Biden, on Ja… [+5100 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "KSL.com"
+  },
+  "author": "Nathaniel Meyersohn, CNN",
+  "title": "McDonald's, In-N-Out, and Chipotle are spending millions on minimum wage referendum - KSL.com",
+  "description": "California voters will decide next year on a referendum that could overturn a landmark new state law setting worker conditions and minimum wages up to $22 an hour for fast-food employees in the nation's largest state.",
+  "url": "https://www.ksl.com/article/50565357/mcdonalds-in-n-out-and-chipotle-are-spending-millions-on-minimum-wage-referendum",
+  "urlToImage": "https://img.ksl.com/slc/2912/291274/29127486.jpg?filter=kslv2/responsive_story_lg",
+  "publishedAt": "2023-01-27T03:39:59Z",
+  "content": "Estimated read time: 3-4 minutes\r\nSACRAMENTO California voters will decide next year on a referendum that could overturn a landmark new state law setting worker conditions and minimum wages up to $22… [+4192 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "YouTube"
+  },
+  "author": null,
+  "title": "Half Moon Bay mass shooting suspect says he was bullied at job in television interview - KPIX CBS SF Bay Area",
+  "description": "Team coverage on the latest developments in the Half Moon Bay mass shooting investigation (1-26-2023)",
+  "url": "https://www.youtube.com/watch?v=wqrt-N-OGNw",
+  "urlToImage": "https://i.ytimg.com/vi/wqrt-N-OGNw/maxresdefault.jpg",
+  "publishedAt": "2023-01-27T01:56:04Z",
+  "content": null
+  },
+  {
+  "source": {
+  "id": "cbs-news",
+  "name": "CBS News"
+  },
+  "author": "Musadiq Bidar, Fin Gómez",
+  "title": "DeSantis may just have made the Republican National Committee chair race a lot more competitive - CBS News",
+  "description": "The GOP Florida governor gave Ronna McDaniel's challenger, Harmeet Dhillon a boost during an interview with \"The Charlie Kirk Show.\"",
+  "url": "https://www.cbsnews.com/news/ron-desantis-republican-national-committee-chair-election-harmeet-dhillon-ronna-mcdaniel/",
+  "urlToImage": "https://assets1.cbsnewsstatic.com/hub/i/r/2023/01/27/56e952dd-5f30-43c1-b51e-daca0cc34ead/thumbnail/1200x630/45f800e133304dc56501a3e8907b7221/gettyimages-1172421278.jpg",
+  "publishedAt": "2023-01-27T01:51:00Z",
+  "content": "Florida Governor Ron DeSantis may have made the race for the new Republican National Committee chair a lot more competitive on the eve of the election. \r\nRonna McDaniel, seeking her fourth term as ch… [+2822 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "YouTube"
+  },
+  "author": null,
+  "title": "Best Plays From NBA All-Star Starter Luka Doncic | 2022-23 NBA Season - NBA",
+  "description": "Luka Doncic is making his 4th #NBAAllStar appearance. Drafted as the 3rd overall pick in the 2018 NBA Draft out of Slovenia, Luka has three All-NBA First Tea...",
+  "url": "https://www.youtube.com/watch?v=fytzeKzoh7g",
+  "urlToImage": "https://i.ytimg.com/vi/fytzeKzoh7g/maxresdefault.jpg",
+  "publishedAt": "2023-01-27T01:47:51Z",
+  "content": null
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "Neurosciencenews.com"
+  },
+  "author": "Neuroscience News",
+  "title": "Why Episodes of Low Blood Sugar Worsen Eye Disease in People With Diabetes - Neuroscience News",
+  "description": "People with diabetes who experience low blood sugar are more likely to experience worsening diabetic retinopathy.",
+  "url": "https://neurosciencenews.com/blood-sugar-eye-diabetes-22378/",
+  "urlToImage": "https://neurosciencenews.com/files/2023/01/blood-sugar-eye-disease-diabetes-neurosicnes-public.jpg",
+  "publishedAt": "2023-01-27T01:40:57Z",
+  "content": "Summary: People with diabetes who experience low blood sugar are more likely to experience worsening diabetic retinopathy.\r\nSource: Johns Hopkins Medicine\r\nPeople with diabetes who experience periods… [+5591 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "CBS Sports"
+  },
+  "author": "",
+  "title": "2023 NFL playoffs picks: Eagles beat 49ers in NFC title game thriller, Bengals edge Chiefs in AFC Championship - CBS Sports",
+  "description": "Wondering who's going to be playing in Super Bowl LVII? You've come to the right place to find out",
+  "url": "https://www.cbssports.com/nfl/news/2023-nfl-playoffs-picks-eagles-beat-49ers-in-nfc-title-game-thriller-bengals-edge-chiefs-in-afc-championship/",
+  "urlToImage": "https://sportshub.cbsistatic.com/i/r/2023/01/24/39c4011a-21f9-44d0-8a93-a15400e9dfd5/thumbnail/1200x675/a258f3cf7ad15f448435d868ea5f84fa/hurts4.jpg",
+  "publishedAt": "2023-01-27T01:22:21Z",
+  "content": "Maybe it was just me, but did anyone else experience deja vu over the weekend?\r\nThe 49ers, Chiefs and Bengals all won during a divisional round that ended with the Cowboys running the dumbest play po… [+15313 chars]"
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "YouTube"
+  },
+  "author": null,
+  "title": "Prince Andrew booted from Buckingham Palace | 7NEWS - 7NEWS Australia",
+  "description": "Controversial member of the royal family Prince Andrew has reportedly been booted from Buckingham Palace. There’s now growing widespread speculation as to wh...",
+  "url": "https://www.youtube.com/watch?v=vP4g-3B9rMw",
+  "urlToImage": "https://i.ytimg.com/vi/vP4g-3B9rMw/maxresdefault.jpg",
+  "publishedAt": "2023-01-27T01:02:23Z",
+  "content": null
+  },
+  {
+  "source": {
+  "id": null,
+  "name": "YouTube"
+  },
+  "author": null,
+  "title": "Has Earth's Core Stopped Spinning? | January 27, 2023 - CNN 10",
+  "description": null,
+  "url": "https://www.youtube.com/supported_browsers?next_url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DSbSGWs_ZmmE",
+  "urlToImage": null,
+  "publishedAt": "2023-01-27T01:00:10Z",
+  "content": null
+  }
+  ]
+}

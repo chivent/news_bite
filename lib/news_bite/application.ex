@@ -9,15 +9,16 @@ defmodule NewsBite.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      NewsBite.Repo,
+      # NewsBite.Repo,
       # Start the Telemetry supervisor
       NewsBiteWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: NewsBite.PubSub},
       # Start the Endpoint (http/https)
-      NewsBiteWeb.Endpoint
+      NewsBiteWeb.Endpoint,
       # Start a worker by calling: NewsBite.Worker.start_link(arg)
       # {NewsBite.Worker, arg}
+      NewsBite.BiteCache
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
