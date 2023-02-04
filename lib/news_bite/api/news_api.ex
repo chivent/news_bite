@@ -1,15 +1,12 @@
 defmodule NewsBite.Api.NewsApi do
+  alias NewsBite.Utils
+
   def get_news_list(:mock) do
     filename = Application.app_dir(:news_bite, "priv/static/mock_news_source.json")
 
     with {:ok, body} <- File.read(filename),
          {:ok, json} <- Jason.decode(body) do
-      articles =
-        json["articles"]
-        |> Enum.map(fn {key, value} -> {String.to_atom(key), value} end)
-        |> Enum.into(%{})
-
-      {:ok, articles}
+      {:ok, Utils.atomize_map_keys(json["articles"])}
     else
       _ -> {:error}
     end
