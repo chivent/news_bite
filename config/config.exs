@@ -35,7 +35,6 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Maybe change this config?
 config :news_bite, news_api_key: System.get_env("NEWS_API_KEY")
 
 # Import environment specific config. This must remain at the bottom

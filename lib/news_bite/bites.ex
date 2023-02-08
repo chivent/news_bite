@@ -2,27 +2,26 @@ defmodule NewsBite.Bites do
   alias NewsBite.{Articles, Bite, BiteCache}
   alias NewsBite.Utils.Summarise
 
-  def get_bite(id), do: BiteCache.get_bite(id)
+  defdelegate get_bite_by_id(id), to: BiteCache, as: :get_bite
+  defdelegate delete_bite(id), to: BiteCache
 
+  # TODO: Return fallback case if none
   def create_bite(attrs) do
     upsert_bite(%Bite{}, attrs)
   end
 
+  # TODO: Return fallback case if error
   def update_bite(id, attrs) do
     id
-    |> BiteCache.get_bite()
+    # |> get_bite_by_id()
     |> upsert_bite(attrs)
   end
 
-  def delete_bite(id), do: BiteCache.delete_bite(id)
-
-  def get_bite_articles(bite), do: Articles.get_articles(bite)
-
-  def get_bite_summary(bite) do
+  def generate_bite_summary(bite) do
     bite
-    |> get_bite_articles()
-    |> Summarise.articles_to_key_words()
-    |> Enum.take(10)
+    |> Articles.get_articles_by_bite()
+    |> Articles.articles_into_words()
+    |> Summarise.to_key_words()
   end
 
   def get_bite_search_url(bite) do

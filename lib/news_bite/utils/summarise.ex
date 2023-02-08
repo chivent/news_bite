@@ -1,4 +1,5 @@
 defmodule NewsBite.Utils.SummaryStopWords do
+  # Add a doc expanation for stop words
   def list() do
     filename = Application.app_dir(:news_bite, "priv/static/stop_words_english.json")
 
@@ -12,20 +13,12 @@ end
 defmodule NewsBite.Utils.Summarise do
   @stop_words NewsBite.Utils.SummaryStopWords.list()
 
-  def articles_to_key_words(articles) do
-    articles
-    |> Enum.map(&article_into_words(&1))
-    |> Enum.reduce(fn words, acc -> words ++ acc end)
+  def to_key_words(word_list, limit \\ 10) do
+    word_list
     |> Enum.reject(&word_is_invalid?(&1))
     |> Enum.frequencies()
     |> Enum.sort(fn {_, frequency}, {_, other_frequency} -> frequency > other_frequency end)
-  end
-
-  defp article_into_words(article) do
-    "#{article.title} #{article.description}"
-    |> String.downcase()
-    |> String.trim()
-    |> String.split(" ")
+    |> Enum.take(limit)
   end
 
   defp not_a_word?(word), do: !Regex.match?(~r/\w/, word)

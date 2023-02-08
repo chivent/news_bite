@@ -1,6 +1,8 @@
 defmodule NewsBite.BiteCache do
   @namespace :bite_cache
 
+  alias NewsBite.{Bite, Bites}
+
   use GenServer
 
   def start_link(_attrs) do
@@ -10,6 +12,7 @@ defmodule NewsBite.BiteCache do
   @impl true
   def init(_) do
     start()
+    schedule_news_refresh()
     {:ok, nil}
   end
 
@@ -22,20 +25,41 @@ defmodule NewsBite.BiteCache do
   end
 
   def get_bite(id) do
-    {_key, bite} =
-      :ets.lookup(@namespace, id)
-      |> List.first()
-
-    bite
+    with lookup when lookup != [] <-
+           :ets.lookup(@namespace, id),
+         {_key, bite} <-
+           List.first(lookup) do
+      bite
+    else
+      _ -> {:error, :not_found}
+    end
   end
 
-  @spec upsert_bite(atom | %{:id => any, optional(any) => any}) :: true
-  def upsert_bite(bite) do
-    :ets.insert(@namespace, {bite.id, bite})
+  def upsert_bite(%Bite{} = bite) do
+    :ets.insert(@namespace, {bite.id, %{bite: bite, summary: nil}})
+    upsert_bite_summary(bite)
+  end
+
+  def upsert_bite_summary(%Bite{} = bite) do
+    summary = Bites.generate_bite_summary(bite)
+    :ets.insert(@namespace, {bite.id, %{bite: bite, summary: summary}})
   end
 
   def delete_bite(id) do
     :ets.delete(@namespace, id)
+  end
+
+  @impl true
+  def handle_info(:refresh_news, state) do
+    :ets.tab2list(@namespace)
+    |> Enum.map(fn {_id, %{bite: bite}} -> upsert_bite_summary(bite) end)
+
+    schedule_news_refresh()
+    {:noreply, state}
+  end
+
+  defp schedule_news_refresh(retrieval_rate \\ 2) do
+    Process.send_after(self(), :refresh_news, retrieval_rate * 60 * 60 * 1000)
   end
 
   # @impl true
