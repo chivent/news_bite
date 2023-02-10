@@ -13,7 +13,7 @@ defmodule NewsBite.Bites do
   # TODO: Return fallback case if error
   def update_bite(id, attrs) do
     id
-    # |> get_bite_by_id()
+    |> get_bite_by_id()
     |> upsert_bite(attrs)
   end
 

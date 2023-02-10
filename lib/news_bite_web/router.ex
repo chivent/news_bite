@@ -17,7 +17,7 @@ defmodule NewsBiteWeb.Router do
   scope "/", NewsBiteWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", NewsBiteLive, :index
   end
 
   # Other scopes may use custom stacks.

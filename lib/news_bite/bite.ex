@@ -2,21 +2,20 @@ defmodule NewsBite.Bite do
   alias __MODULE__
   import Ecto.Changeset
   use Ecto.Schema
-  @article_limits [50, 100, 250, 500, 1000]
 
   embedded_schema do
-    field :subjects, {:array, :string}
-    field :search_term, {:array, :string}
+    field :category, Ecto.Enum,
+      values: [:business, :entertainment, :general, :health, :science, :sports, :technology]
+
+    field :search_terms, {:array, :string}
     field :duration_span, :integer
-    field :article_limit, :integer
     field :duration, Ecto.Enum, values: [:year, :month, :week, :day, :hour]
   end
 
   def changeset(struct \\ %Bite{}, attrs) do
     struct
-    |> cast(attrs, [:subjects, :search_term, :article_limit, :duration, :duration_span])
+    |> cast(attrs, [:category, :search_terms, :country, :duration, :duration_span])
     |> maybe_generate_uuid()
-    |> validate_inclusion(:article_limit, @article_limits)
     |> validate_number(:duration_span, greater_than_or_equal_to: 1)
   end
 

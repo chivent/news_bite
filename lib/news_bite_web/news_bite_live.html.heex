@@ -1,0 +1,13 @@
+<div>
+  <%= if @modal_open do %>
+    <%= live_component NewsBiteWeb.Components.NewBiteModal, id: "new_bite_overlay" %>
+  <% end %>
+  <div class="w-full bg-gray-300 p-2">
+    <button phx-click="open_modal" class="bg-gray-400 p-2 rounded-md"> + New Bite </button>
+  </div>
+  <div class="grid grid-cols-2 auto-rows-max gap-4 p-10">
+    <%= for {id, %{bite: bite, summary: summary}} <- @bite_entries do %>
+      <%= live_component NewsBiteWeb.Components.Bite, id: id, bite: bite, summary: summary %>
+    <% end %>
+  </div>
+</div>
