@@ -21,7 +21,7 @@ defmodule NewsBite.Utils.Summarise do
     |> Enum.take(limit)
   end
 
-  defp not_a_word?(word), do: !Regex.match?(~r/\w/, word)
+  defp not_a_word?(word), do: !Regex.match?(~r/[A-Za-z]+/, word)
 
   defp word_is_invalid?(word), do: not_a_word?(word) || word in @stop_words
 end

@@ -8,10 +8,15 @@ defmodule NewsBiteWeb.Components.NewBiteModal do
   end
 
   @impl true
-  def handle_event("create_bite", _, socket) do
+  def handle_event("create_bite", %{"new_bite" => params}, socket) do
+    params =
+      Map.take(params, ["category"])
+      |> Map.put("search_terms", [Map.get(params, "search_terms")])
+
     # TODO: Create bite with params here...
-    bite_entry = Bites.create_bite(%{})
-    send(self(), {"bite_added", bite_entry})
+    bite_entry = Bites.create_bite(params)
+    # bite_entry = %{bite: %NewsBite.Bite{id: Ecto.UUID.generate()}, summary: ["testing ui"]}
+    send(self(), {"bite_updated", bite_entry})
     send(self(), "close_modal")
     {:noreply, socket}
   end
