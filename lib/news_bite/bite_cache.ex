@@ -40,15 +40,8 @@ defmodule NewsBite.BiteCache do
   end
 
   def upsert_bite(%Bite{} = bite) do
-    :ets.insert(@namespace, {bite.id, %{bite: bite, summary: nil}})
-    upsert_bite_summary(bite)
-  end
-
-  def upsert_bite_summary(%Bite{} = bite) do
-    summary = Bites.generate_bite_summary(bite)
-    updated_bite_entry = %{bite: bite, summary: summary}
-    :ets.insert(@namespace, {bite.id, updated_bite_entry})
-    updated_bite_entry
+    :ets.insert(@namespace, {bite.id, bite})
+    bite
   end
 
   def delete_bite(id) do
@@ -58,7 +51,7 @@ defmodule NewsBite.BiteCache do
   @impl true
   def handle_info(:refresh_news, state) do
     list_bites()
-    |> Enum.map(fn {_id, %{bite: bite}} -> upsert_bite_summary(bite) end)
+    |> Enum.map(fn {_id, %{bite: bite}} -> upsert_bite(bite) end)
 
     schedule_news_refresh()
     {:noreply, state}

@@ -17,11 +17,16 @@ defmodule NewsBite.Bites do
     |> upsert_bite(attrs)
   end
 
-  def generate_bite_summary(bite) do
+  def upsert_bite_article_groups(bite) do
+    article_groups =
+      bite
+      |> Articles.get_articles_by_bite()
+      |> Articles.articles_into_words()
+      |> Summarise.group_by_top_words()
+
     bite
-    |> Articles.get_articles_by_bite()
-    |> Articles.articles_into_words()
-    |> Summarise.to_key_words()
+    |> Bite.article_groups_changeset(%{article_groups: article_groups})
+    |> Ecto.Changeset.apply_changes()
   end
 
   def get_bite_search_url(bite) do
@@ -32,6 +37,7 @@ defmodule NewsBite.Bites do
     bite
     |> Bite.changeset(attrs)
     |> Ecto.Changeset.apply_changes()
+    |> upsert_bite_article_groups()
     |> BiteCache.upsert_bite()
   end
 end

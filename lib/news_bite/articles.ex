@@ -34,6 +34,7 @@ defmodule NewsBite.Articles do
     |> String.trim()
     |> String.replace([",", "."], "")
     |> String.split(" ")
+    |> Enum.map(fn word -> {article, word} end)
   end
 
   defp remove_title_source(title) when not is_nil(title) do

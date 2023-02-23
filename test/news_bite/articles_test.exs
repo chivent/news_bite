@@ -27,27 +27,27 @@ defmodule NewsBite.ArticlesTest do
 
   test "articles_into_words/1 turns a list of articles into words" do
     articles = [
-      %Article{title: "This is a title 1", description: "This is a description"},
-      %Article{title: "This is a title 2", description: nil}
+      %Article{id: 1, title: "This is a title 1", description: "This is a description"},
+      %Article{id: 2, title: "This is a title 2", description: nil}
     ]
 
     result = Articles.articles_into_words(articles)
 
     expected = [
-      "this",
-      "is",
-      "a",
-      "title",
-      "1",
-      "this",
-      "is",
-      "a",
-      "description",
-      "this",
-      "is",
-      "a",
-      "title",
-      "2"
+      {1, "this"},
+      {1, "is"},
+      {1, "a"},
+      {1, "title"},
+      {1, "1"},
+      {1, "this"},
+      {1, "is"},
+      {1, "a"},
+      {1, "description"},
+      {2, "this"},
+      {2, "is"},
+      {2, "a"},
+      {2, "title"},
+      {2, "2"}
     ]
 
     assert Enum.sort(result) == Enum.sort(expected)

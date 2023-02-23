@@ -7,13 +7,13 @@ defmodule NewsBiteWeb.NewsBiteLive do
     socket =
       socket
       |> assign(modal_open: false)
-      |> assign_bite_entries()
+      |> assign_bites()
 
     {:ok, socket}
   end
 
-  defp assign_bite_entries(socket) do
-    assign(socket, bite_entries: BiteCache.list_bites() |> Enum.into(%{}))
+  defp assign_bites(socket) do
+    assign(socket, bites: BiteCache.list_bites() |> Enum.into(%{}))
   end
 
   @impl true
@@ -30,7 +30,7 @@ defmodule NewsBiteWeb.NewsBiteLive do
   @impl true
   def handle_event("refresh_all", _params, socket) do
     # send(BiteCache, "refresh_news")
-    {:noreply, assign_bite_entries(socket)}
+    {:noreply, assign_bites(socket)}
   end
 
   @impl true
@@ -39,14 +39,14 @@ defmodule NewsBiteWeb.NewsBiteLive do
   end
 
   @impl true
-  def handle_info({"bite_updated", bite_entry}, socket) do
-    updated_bite_entries = Map.put(socket.assigns.bite_entries, bite_entry.bite.id, bite_entry)
-    {:noreply, assign(socket, bite_entries: updated_bite_entries)}
+  def handle_info({"bite_updated", bite}, socket) do
+    updated_bites = Map.put(socket.assigns.bites, bite.id, bite)
+    {:noreply, assign(socket, bites: updated_bites)}
   end
 
   @impl true
   def handle_info({"bite_deleted", id}, socket) do
-    updated_bite_entries = Map.delete(socket.assigns.bite_entries, id)
-    {:noreply, assign(socket, bite_entries: updated_bite_entries)}
+    updated_bites = Map.delete(socket.assigns.bites, id)
+    {:noreply, assign(socket, bites: updated_bites)}
   end
 end
