@@ -12,8 +12,7 @@ defmodule NewsBite.BiteCache do
   @impl true
   def init(_) do
     start()
-    schedule_news_refresh()
-    {:ok, nil}
+    {:ok, %{scheduled: schedule_news_refresh()}}
   end
 
   @spec start :: :ok | {:error, :already_started}
@@ -23,6 +22,8 @@ defmodule NewsBite.BiteCache do
   rescue
     ArgumentError -> {:error, :already_started}
   end
+
+  def pid(), do: self()
 
   def list_bites() do
     :ets.tab2list(@namespace)
@@ -48,21 +49,24 @@ defmodule NewsBite.BiteCache do
     :ets.delete(@namespace, id)
   end
 
+  # TODO: Need a fallback for when news refreshing fails
   @impl true
-  def handle_info(:refresh_news, state) do
+  def handle_info({:refresh_news, caller_pid}, state) do
     list_bites()
-    |> Enum.map(fn {_id, %{bite: bite}} -> upsert_bite(bite) end)
+    |> Enum.map(fn {_id, bite} -> upsert_bite(bite) end)
 
-    schedule_news_refresh()
-    {:noreply, state}
+    Process.cancel_timer(state.scheduled)
+
+    if caller_pid do
+      Phoenix.PubSub.broadcast(NewsBite.PubSub, "live_update", "bites_refreshed")
+    else
+      Phoenix.PubSub.broadcast(NewsBite.PubSub, "live_update", "update_available")
+    end
+
+    {:noreply, %{scheduled: schedule_news_refresh()}}
   end
 
-  defp schedule_news_refresh(retrieval_rate \\ 2) do
-    Process.send_after(self(), :refresh_news, retrieval_rate * 60 * 60 * 1000)
+  defp schedule_news_refresh(retrieval_rate \\ 3) do
+    Process.send_after(self(), {:refresh_news, nil}, retrieval_rate * 60 * 60 * 1000)
   end
-
-  # @impl true
-  # def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
-  #   # Save to db?
-  # end
 end

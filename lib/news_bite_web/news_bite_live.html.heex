@@ -1,11 +1,21 @@
 <div>
-  <%= if @modal_open do %>
-    <%= live_component NewsBiteWeb.Components.NewBiteModal, id: "new_bite_overlay" %>
+
+  <%= if @loading do %>
+    <NewsBiteWeb.Components.Modal.progress notice="Refreshing Bites..."/>
   <% end %>
-  <div class="w-full bg-gray-300 p-2">
-    <button phx-click="open_modal" class="bg-gray-400 p-2 rounded-md"> + New Bite </button>
+
+  <%= if @modal_open do %>
+    <%= live_component NewsBiteWeb.Components.NewBiteModal, id: "new_bite_modal" %>
+  <% end %>
+  <div class="flex justify-between w-full bg-gray-300 p-2">
+    <button phx-click="show_empty_bite_form" class="bg-gray-400 p-2 rounded-md"> + New Bite </button>
+    <div class="flex gap-2">
+      <button phx-click="refresh_all" class="bg-gray-400 p-2 rounded-md"> Refresh </button>
+      <button phx-click="refresh_all" class="bg-gray-400 p-2 rounded-md"> Help </button>
+    </div>
   </div>
-  <div class="grid grid-cols-2 auto-rows-max gap-4 p-10">
+
+  <div class="lg:grid lg:grid-cols-2 lg:auto-rows-max lg:gap-4 p-10 block w-full">
     <%= for {id, bite} <- @bites do %>
       <%= live_component NewsBiteWeb.Components.Bite, id: id, bite: bite %>
     <% end %>

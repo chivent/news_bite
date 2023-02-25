@@ -8,7 +8,7 @@ defmodule NewsBite.Bite do
       values: [:business, :entertainment, :general, :health, :science, :sports, :technology]
     )
 
-    field(:country, Ecto.Enum, values: [])
+    field(:country, Ecto.Enum, values: NewsBite.Utils.Countries.enum())
     field(:search_terms, {:array, :string})
     field(:duration_span, :integer)
     field(:duration, Ecto.Enum, values: [:year, :month, :week, :day, :hour])

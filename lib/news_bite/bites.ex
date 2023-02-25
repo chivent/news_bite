@@ -1,23 +1,21 @@
 defmodule NewsBite.Bites do
   alias NewsBite.{Articles, Bite, BiteCache}
-  alias NewsBite.Utils.Summarise
+  alias NewsBite.Utils.{Countries, Summarise}
 
   defdelegate get_bite_by_id(id), to: BiteCache, as: :get_bite
   defdelegate delete_bite(id), to: BiteCache
 
-  # TODO: Return fallback case if none
-  def create_bite(attrs) do
+  def upsert_bite(%{"id" => ""} = attrs) do
     upsert_bite(%Bite{}, attrs)
   end
 
-  # TODO: Return fallback case if error
-  def update_bite(id, attrs) do
+  def upsert_bite(%{"id" => id} = attrs) do
     id
     |> get_bite_by_id()
     |> upsert_bite(attrs)
   end
 
-  def upsert_bite_article_groups(bite) do
+  def upsert_bite_article_groups(%Bite{} = bite) do
     article_groups =
       bite
       |> Articles.get_articles_by_bite()
@@ -29,8 +27,31 @@ defmodule NewsBite.Bites do
     |> Ecto.Changeset.apply_changes()
   end
 
-  def get_bite_search_url(bite) do
-    "https://news.google.com/search?q=#{bite.search_term}"
+  def upsert_bite_article_groups(id) do
+    id
+    |> get_bite_by_id()
+    |> upsert_bite_article_groups()
+  end
+
+  def get_bite_title(bite) do
+    category =
+      if bite.category do
+        category = bite.category |> Atom.to_string() |> String.capitalize()
+        " for #{category} "
+      else
+        ""
+      end
+
+    country = if bite.country, do: " in #{Countries.get_name_by_code(bite.country)} ", else: ""
+
+    search_terms =
+      if length(bite.search_terms) > 0 do
+        " with '" <> Enum.join(bite.search_terms, ", ") <> "'"
+      else
+        ""
+      end
+
+    "Latest news" <> country <> category <> search_terms
   end
 
   defp upsert_bite(bite, attrs) do

@@ -10,4 +10,10 @@ defmodule NewsBite.Utils do
   end
 
   def atomize_map_keys(arg), do: arg
+
+  def optional_options(options) do
+    options = Enum.map(options, &{&1, &1})
+
+    [{"None", nil} | options]
+  end
 end

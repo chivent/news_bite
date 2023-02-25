@@ -6,7 +6,6 @@ defmodule NewsBite.Articles do
   alias NewsBite.Api.NewsApi
   alias NewsBite.Articles
 
-  # TODO: Add fallback for failure case
   def get_articles_by_bite(bite) do
     {:ok, json} = NewsApi.get_news_list(:mock)
 
