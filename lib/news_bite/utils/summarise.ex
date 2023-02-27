@@ -19,7 +19,11 @@ defmodule NewsBite.Utils.Summarise do
     |> Enum.reject(&word_is_invalid?(&1))
     |> Enum.group_by(fn {_id, word} -> word end, fn {article, _word} -> article end)
     |> Enum.map(fn {word, article_list} ->
-      %{word: word, frequency: length(article_list), articles: Enum.uniq(article_list)}
+      %NewsBite.ArticleGroup{
+        word: word,
+        frequency: length(article_list),
+        articles: Enum.uniq(article_list)
+      }
     end)
     |> Enum.sort(fn group, other -> group.frequency > other.frequency end)
     |> Enum.take(10)

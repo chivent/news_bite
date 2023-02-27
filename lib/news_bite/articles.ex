@@ -2,6 +2,10 @@ defmodule NewsBite.Article do
   defstruct [:id, :title, :description, :content, :url]
 end
 
+defmodule NewsBite.ArticleGroup do
+  defstruct [:word, :frequency, :articles]
+end
+
 defmodule NewsBite.Articles do
   alias NewsBite.Api.NewsApi
   alias NewsBite.Articles

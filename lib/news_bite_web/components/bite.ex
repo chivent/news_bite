@@ -17,10 +17,10 @@ defmodule NewsBiteWeb.Components.Bite do
     word_group = word_group || List.first(bite.article_groups)
 
     ~H"""
-    <div class='bg-gray-200 relative'>
+    <div class='bg-gray-200 relative rounded-sm'>
 
       <%= if @loading do %>
-        <NewsBiteWeb.Components.Modal.progress fit = "true" notice="Refreshing Bite..."/>
+        <NewsBiteWeb.Components.Modal.progress fit={true} notice="Refreshing Bite..."/>
       <% else %>
         <div></div>
       <% end %>
@@ -35,7 +35,7 @@ defmodule NewsBiteWeb.Components.Bite do
           </div>
         </div>
         <div class="flex gap-2 flex-wrap">
-          <%= for %{word: word, frequency: frequency, articles: articles} <- bite.article_groups do %>
+          <%= for %{word: word, frequency: frequency} <- bite.article_groups do %>
           <div class = {"rounded-full px-3 py-1 hover:opacity-70 #{if word == word_group.word, do: 'bg-gray-500 text-white', else: 'bg-gray-300'}"}>
             <button phx-target={@myself} phx-click="select_word" phx-value-word={word}>
               <%= word %>
@@ -47,7 +47,7 @@ defmodule NewsBiteWeb.Components.Bite do
 
         <div class = "flex flex-col gap-2 pt-4">
           <%= for article <- word_group.articles do %>
-            <a class = "bg-gray-300 p-2 hover:opacity-80" href={article.url} target="_blank">
+            <a class = "rounded-sm bg-gray-300 p-2 hover:opacity-80" href={if article.url && bite.id != :mock, do: article.url} target="_blank">
               <h3 class="text-lg"> <%= article.title %> </h3>
               <p class="text-sm text-gray-500"> <%= article.description %> </p>
             </a>
@@ -89,4 +89,19 @@ defmodule NewsBiteWeb.Components.Bite do
     send(self(), {"show_bite_form", bite})
     {:noreply, socket}
   end
+
+  @impl true
+  def handle_event(_, %{"value" => ""}, socket) do
+    {:noreply, socket}
+  end
 end
+
+# Icons and Colors
+# Secure retrieval
+# Refactor Code
+# Documentation and Specs
+# Tests
+
+# Optional
+# Mobile UI: ... options, scrollable word list, collapsible bites
+# Users improvement doc

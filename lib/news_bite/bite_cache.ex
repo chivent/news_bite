@@ -66,7 +66,7 @@ defmodule NewsBite.BiteCache do
     {:noreply, %{scheduled: schedule_news_refresh()}}
   end
 
-  defp schedule_news_refresh(retrieval_rate \\ 3) do
+  defp schedule_news_refresh(retrieval_rate \\ 4) do
     Process.send_after(self(), {:refresh_news, nil}, retrieval_rate * 60 * 60 * 1000)
   end
 end

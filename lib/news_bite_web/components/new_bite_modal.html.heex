@@ -1,21 +1,22 @@
-<div class="fixed w-screen h-screen z-10">
-  <div phx-click="close_modal" class="overlay absolute w-screen h-screen" style="background-color: rgba(0, 0, 0, 0.5);"> </div>
-  <div class="absolute z-10 right-0 bg-white h-screen w-80 shadow-lg">
-    <%= if @loading do %> <NewsBiteWeb.Components.Modal.progress fit = "true"/> <% end %>
-    <form phx-target= {@myself} phx-submit="upsert_bite" class="p-4 pr-6">
-      <div class="flex justify-between pb-4">
-        <button class="rounded-md bg-gray-100 py-2 px-4" type="button" phx-click="close_modal"> Cancel </button>
-        <%= submit "#{if Map.get(@bite, :id), do: 'Update Bite', else: '+ Create Bite' }", class: "rounded-md bg-gray-300 p-2" %>
-      </div>
-      <div class="flex flex-col">
-        <%= hidden_input :new_bite, :id, value: @bite.id %>
-        <%= label :new_bite, :search_terms, class: "pb-2" %>
-        <%= text_input :new_bite, :search_terms %>
-        <%= label :new_bite, :country, class: "py-2" %>
-        <%= select :new_bite, :country, NewsBite.Utils.Countries.list(), value: @bite.country %>
-        <%= label :new_bite, :category, class: "py-2" %>
-        <%= select :new_bite, :category, NewsBite.Utils.optional_options(Ecto.Enum.values(NewsBite.Bite, :category)) , value: @bite.category, class: "capitalize" %>
-      </div>
-    </form>
-  </div>
+<div>
+  <NewsBiteWeb.Components.Modal.overlay dismissable={true}>
+    <div class="absolute z-10 right-0 bg-white h-screen shadow-lg">
+      <%= if @loading do %> <NewsBiteWeb.Components.Modal.progress fit={true} /> <% end %>
+      <form phx-target= {@myself} phx-submit="upsert_bite" class="p-4 pr-6">
+        <div class="flex justify-between pb-4">
+          <button class="rounded-md bg-gray-100 py-2 px-4" type="button" phx-click="close_modal"> Cancel </button>
+          <%= submit "#{if Map.get(@bite, :id), do: 'Update Bite', else: '+ Create Bite' }", class: "rounded-md bg-gray-300 p-2" %>
+        </div>
+        <div class="flex flex-col">
+          <%= hidden_input :new_bite, :id, value: @bite.id %>
+          <%= label :new_bite, :search_terms, class: "pb-2" %>
+          <%= text_input :new_bite, :search_terms %>
+          <%= label :new_bite, :country, class: "py-2" %>
+          <%= select :new_bite, :country, NewsBite.Utils.Countries.list(), value: @bite.country %>
+          <%= label :new_bite, :category, class: "py-2" %>
+          <%= select :new_bite, :category, NewsBite.Utils.optional_options(Ecto.Enum.values(NewsBite.Bite, :category)) , value: @bite.category, class: "capitalize" %>
+        </div>
+      </form>
+    </div>
+  </NewsBiteWeb.Components.Modal.overlay>
 </div>

@@ -6,8 +6,7 @@ defmodule NewsBiteWeb.NewsBiteLive do
   def mount(_params, _session, socket) do
     socket =
       socket
-      |> assign(modal_open: false)
-      |> assign(loading: false)
+      |> assign(modal_shown: nil)
       |> assign(flash_timer: nil)
       |> assign_bites()
 
@@ -27,6 +26,11 @@ defmodule NewsBiteWeb.NewsBiteLive do
   end
 
   @impl true
+  def handle_event("show_help_modal", _, socket) do
+    {:noreply, assign(socket, modal_shown: :help)}
+  end
+
+  @impl true
   def handle_event("close_modal", _params, socket) do
     send(self(), "close_modal")
     {:noreply, socket}
@@ -35,12 +39,7 @@ defmodule NewsBiteWeb.NewsBiteLive do
   @impl true
   def handle_event("refresh_all", _params, socket) do
     Process.send(:bite_cache, {:refresh_news, self()}, [])
-    {:noreply, assign(socket, loading: true)}
-  end
-
-  @impl true
-  def handle_info("close_modal", socket) do
-    {:noreply, assign(socket, modal_open: false)}
+    {:noreply, assign(socket, modal_shown: :refreshing_all)}
   end
 
   @impl true
@@ -67,9 +66,14 @@ defmodule NewsBiteWeb.NewsBiteLive do
   end
 
   @impl true
+  def handle_info("close_modal", socket) do
+    {:noreply, assign(socket, modal_shown: nil)}
+  end
+
+  @impl true
   def handle_info({"show_bite_form", bite}, socket) do
     send_update(NewsBiteWeb.Components.NewBiteModal, id: "new_bite_modal", bite: bite)
-    {:noreply, assign(socket, modal_open: true)}
+    {:noreply, assign(socket, modal_shown: :new_bite_form)}
   end
 
   @impl true
@@ -85,12 +89,12 @@ defmodule NewsBiteWeb.NewsBiteLive do
 
   @impl true
   def handle_info("bites_refreshed", socket) do
+    send(self(), "close_modal")
     send(self(), {"show_flash", {:success, "All Bites Refreshed!"}})
 
     socket =
       socket
       |> assign(bites: BiteCache.list_bites() |> Enum.into(%{}))
-      |> assign(loading: false)
 
     {:noreply, socket}
   end
@@ -116,7 +120,6 @@ defmodule NewsBiteWeb.NewsBiteLive do
 
   @impl true
   def handle_info({"refresh_bite", id}, socket) do
-    # TODO: maybe add flash
     bite = Bites.upsert_bite_article_groups(id)
 
     send_update(NewsBiteWeb.Components.Bite, id: id, loading: false, selected_word_group: nil)

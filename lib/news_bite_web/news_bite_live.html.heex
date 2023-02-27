@@ -1,17 +1,20 @@
 <div>
-
-  <%= if @loading do %>
-    <NewsBiteWeb.Components.Modal.progress notice="Refreshing Bites..."/>
+  <%= case @modal_shown do %>
+    <% :new_bite_form -> %>
+      <%= live_component NewsBiteWeb.Components.NewBiteModal, id: "new_bite_modal" %>
+    <% :help -> %>
+      <NewsBiteWeb.Components.Modal.help />
+    <% :refreshing_all -> %>
+      <NewsBiteWeb.Components.Modal.progress notice="Refreshing Bites..."/>
+    <% _ -> %>
+      <div></div>
   <% end %>
 
-  <%= if @modal_open do %>
-    <%= live_component NewsBiteWeb.Components.NewBiteModal, id: "new_bite_modal" %>
-  <% end %>
   <div class="flex justify-between w-full bg-gray-300 p-2">
     <button phx-click="show_empty_bite_form" class="bg-gray-400 p-2 rounded-md"> + New Bite </button>
     <div class="flex gap-2">
       <button phx-click="refresh_all" class="bg-gray-400 p-2 rounded-md"> Refresh </button>
-      <button phx-click="refresh_all" class="bg-gray-400 p-2 rounded-md"> Help </button>
+      <button phx-click="show_help_modal" class="bg-gray-400 p-2 rounded-md"> Help </button>
     </div>
   </div>
 

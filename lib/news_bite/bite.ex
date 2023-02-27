@@ -10,8 +10,6 @@ defmodule NewsBite.Bite do
 
     field(:country, Ecto.Enum, values: NewsBite.Utils.Countries.enum())
     field(:search_terms, {:array, :string})
-    field(:duration_span, :integer)
-    field(:duration, Ecto.Enum, values: [:year, :month, :week, :day, :hour])
     field(:article_groups, {:array, :map}, default: nil)
 
     # These bites are for latest headlines...
@@ -20,9 +18,8 @@ defmodule NewsBite.Bite do
 
   def changeset(struct \\ %Bite{}, attrs) do
     struct
-    |> cast(attrs, [:category, :search_terms, :country, :duration, :duration_span])
+    |> cast(attrs, [:category, :search_terms, :country])
     |> maybe_generate_uuid()
-    |> validate_number(:duration_span, greater_than_or_equal_to: 1)
   end
 
   def article_groups_changeset(bite, attrs) do
