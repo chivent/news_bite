@@ -1,4 +1,6 @@
 defmodule NewsBiteWeb.Components.Modal do
+  alias NewsBiteWeb.Helpers.IconHelper
+
   use Phoenix.Component
 
   def overlay(assigns) do
@@ -60,20 +62,22 @@ defmodule NewsBiteWeb.Components.Modal do
         <div class="absolute top-0 right-0 bottom-0 left-0 m-auto bg-white w-4/5 h-4/5 rounded-md overflow-y-hidden flex flex-col">
           <div class="flex justify-between items-center p-4">
             <p class="text-2xl font-bold"> Welcome to NewsBite! </p>
-            <button class="rounded-md bg-gray-100 py-2 px-4" type="button" phx-click="close_modal"> Close </button>
+            <button class="py-2 px-4" type="button" phx-click="close_modal">
+              <%= IconHelper.icon_tag(NewsBiteWeb.Endpoint, "cross", class: "h-6 w-6") %>
+            </button>
           </div>
 
           <div class="space-y-4 overflow-y-scroll p-4 px-6">
-            <div class="bg-blue-100 border border-solid border-blue-200 p-4 rounded">
+            <div class="bg-slate-100 border border-solid border-blue-200 p-4 rounded">
               <p>This app helps you follow the latest news through Bites, groups that highlight the top 10 mentioned words in the 100 newest articles for a certain topic.</p>
             </div>
             <p class="pt-2 text-base">Every Bite can be created with specific search terms, category and country to search for news in.</p>
             <%= live_component NewsBiteWeb.Components.Bite, id: :mock, bite: example_bite %>
             <ul class="list-disc ml-6">
-              <li> Top Mentioned Words - List of the top 10 frequently mentioned words and the number of times it has been repeated. Selecting a word lists the articles containing it. </li>
-              <li> Refresh Icon - Click to retrieve the latest news for this bite. </li>
-              <li> Edit Icon - Click to update the search terms of the bite. </li>
-              <li> Delete Icon - Click to remove the bite. </li>
+              <li> Word Badge - A top 10 frequently mentioned words and the number of times it has been repeated. Selecting a word lists the articles containing it. </li>
+              <li> <p class="flex items-end"> <%= IconHelper.icon_tag(NewsBiteWeb.Endpoint, "refresh", class: "h-5 w-5") %> - Click to retrieve the latest news for this bite. </p> </li>
+              <li> <p class="flex items-end"> <%= IconHelper.icon_tag(NewsBiteWeb.Endpoint, "edit", class: "h-5 w-5") %> - Click to update the search terms of the bite. </p> </li>
+              <li> <p class="flex items-end"> <%= IconHelper.icon_tag(NewsBiteWeb.Endpoint, "delete", class: "h-5 w-5") %> - Click to remove the bite. </p></li>
               <li> Article - An article related to the currently selected word. Click to visit the article </li>
             </ul>
 

@@ -17,7 +17,7 @@ defmodule NewsBiteWeb.Components.Bite do
     word_group = word_group || List.first(bite.article_groups)
 
     ~H"""
-    <div class='bg-gray-200 relative rounded-sm'>
+    <div class='bg-slate-200 relative rounded-sm'>
 
       <%= if @loading do %>
         <NewsBiteWeb.Components.Modal.progress fit={true} notice="Refreshing Bite..."/>
@@ -29,17 +29,23 @@ defmodule NewsBiteWeb.Components.Bite do
         <div class="flex justify-between pb-4 gap-4">
           <h2 class="text-xl font-bold"> <%= Bites.get_bite_title(bite) %> </h2>
           <div class="actions justify-self-end">
-            <button class="hover:opacity-70" phx-target={@myself} phx-click="edit_bite" phx-value-id={bite.id}> E </button>
-            <button class="hover:opacity-70" phx-target={@myself} phx-click="refresh_bite" phx-value-id={bite.id}> R </button>
-            <button class="hover:opacity-70" phx-target={@myself} phx-click="delete_bite" phx-value-id={bite.id}> X </button>
+            <button class="hover:opacity-70" phx-target={@myself} phx-click="edit_bite" phx-value-id={bite.id}>
+              <%= icon_tag(@socket, "edit", class: "h-6 w-6") %>
+             </button>
+            <button class="hover:opacity-70" phx-target={@myself} phx-click="refresh_bite" phx-value-id={bite.id}>
+              <%= icon_tag(@socket, "refresh", class: "h-6 w-6") %>
+             </button>
+            <button class="hover:opacity-70" phx-target={@myself} phx-click="delete_bite" phx-value-id={bite.id}>
+              <%= icon_tag(@socket, "delete", class: "h-6 w-6") %>
+            </button>
           </div>
         </div>
         <div class="flex gap-2 flex-wrap">
           <%= for %{word: word, frequency: frequency} <- bite.article_groups do %>
-          <div class = {"rounded-full px-3 py-1 hover:opacity-70 #{if word == word_group.word, do: 'bg-gray-500 text-white', else: 'bg-gray-300'}"}>
+          <div class = {"rounded-full px-3 py-1 hover:opacity-70 #{if word == word_group.word, do: 'bg-slate-500 text-white', else: 'bg-slate-300'}"}>
             <button phx-target={@myself} phx-click="select_word" phx-value-word={word}>
               <%= word %>
-              <span class={"rounded-full px-2 #{if word == word_group.word, do: 'bg-gray-200 text-black', else: 'bg-gray-500 text-white'}"}> <%= frequency %> </span>
+              <span class={"rounded-full px-2 #{if word == word_group.word, do: 'bg-slate-200 text-black', else: 'bg-slate-500 text-white'}"}> <%= frequency %> </span>
             </button>
           </div>
           <% end %>
@@ -47,7 +53,7 @@ defmodule NewsBiteWeb.Components.Bite do
 
         <div class = "flex flex-col gap-2 pt-4">
           <%= for article <- word_group.articles do %>
-            <a class = "rounded-sm bg-gray-300 p-2 hover:opacity-80" href={if article.url && bite.id != :mock, do: article.url} target="_blank">
+            <a class = "rounded-sm bg-slate-300 p-2 hover:opacity-80" href={if article.url && bite.id != :mock, do: article.url} target="_blank">
               <h3 class="text-lg"> <%= article.title %> </h3>
               <p class="text-sm text-gray-500"> <%= article.description %> </p>
             </a>
@@ -95,13 +101,3 @@ defmodule NewsBiteWeb.Components.Bite do
     {:noreply, socket}
   end
 end
-
-# Icons and Colors
-# Secure retrieval
-# Refactor Code
-# Documentation and Specs
-# Tests
-
-# Optional
-# Mobile UI: ... options, scrollable word list, collapsible bites
-# Users improvement doc

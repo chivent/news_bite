@@ -95,6 +95,7 @@ defmodule NewsBiteWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
+      import NewsBiteWeb.Helpers.IconHelper
       import NewsBiteWeb.ErrorHelpers
       import NewsBiteWeb.Gettext
       alias NewsBiteWeb.Router.Helpers, as: Routes

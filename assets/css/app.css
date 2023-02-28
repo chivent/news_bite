@@ -124,6 +124,10 @@
 
 @layer components {
   .bite {
-    @apply bg-gray-400 p-10;
+    @apply bg-slate-400 p-10;
   }
+}
+
+.icon {
+  fill: currentColor;
 }

@@ -10,11 +10,15 @@
       <div></div>
   <% end %>
 
-  <div class="flex justify-between w-full bg-gray-300 p-2">
-    <button phx-click="show_empty_bite_form" class="bg-gray-400 p-2 rounded-md"> + New Bite </button>
+  <div class="flex justify-between w-full bg-slate-300 p-2 pl-4">
+    <button phx-click="show_empty_bite_form" class="bg-slate-400 p-2 rounded-sm hover:opacity-70"> + New Bite </button>
     <div class="flex gap-2">
-      <button phx-click="refresh_all" class="bg-gray-400 p-2 rounded-md"> Refresh </button>
-      <button phx-click="show_help_modal" class="bg-gray-400 p-2 rounded-md"> Help </button>
+      <button phx-click="refresh_all" class="p-2 hover:opacity-70">
+        <%= icon_tag(@socket, "refresh", class: "h-6 w-6") %>
+        </button>
+      <button phx-click="show_help_modal" class="p-2 hover:opacity-70">
+        <%= icon_tag(@socket, "help", class: "h-6 w-6") %>
+      </button>
     </div>
   </div>
 
