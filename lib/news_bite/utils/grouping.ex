@@ -1,4 +1,4 @@
-defmodule NewsBite.Utils.SummaryStopWords do
+defmodule NewsBite.Utils.StopWords do
   # Add a doc expanation for stop words
   def list() do
     filename = Application.app_dir(:news_bite, "priv/static/stop_words_english.json")
@@ -10,8 +10,8 @@ defmodule NewsBite.Utils.SummaryStopWords do
   end
 end
 
-defmodule NewsBite.Utils.Summarise do
-  @stop_words NewsBite.Utils.SummaryStopWords.list()
+defmodule NewsBite.Utils.Grouping do
+  @stop_words NewsBite.Utils.StopWords.list()
 
   def group_by_top_words(word_list) do
     word_list

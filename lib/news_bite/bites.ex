@@ -43,13 +43,10 @@ defmodule NewsBite.Bites do
       end
 
     country = if bite.country, do: " in #{Countries.get_name_by_code(bite.country)} ", else: ""
+    search_term = if bite.search_term, do: " with '#{bite.search_term}'", else: ""
 
-    search_terms =
-      if length(bite.search_terms) > 0 do
-        " with '" <> Enum.join(bite.search_terms, ", ") <> "'"
-      else
-        ""
-      end
+    "Latest news" <> country <> category <> search_term
+  end
 
     "Latest news" <> country <> category <> search_terms
   end

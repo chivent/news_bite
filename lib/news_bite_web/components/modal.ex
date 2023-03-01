@@ -40,7 +40,7 @@ defmodule NewsBiteWeb.Components.Modal do
     example_bite = %NewsBite.Bite{
       id: nil,
       category: :technology,
-      search_terms: ["apple"],
+      search_term: "apple",
       article_groups: [
         %NewsBite.ArticleGroup{
           word: "word_1",

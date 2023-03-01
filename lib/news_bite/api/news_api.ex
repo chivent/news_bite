@@ -29,21 +29,23 @@ defmodule NewsBite.Api.NewsApi do
     with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
            HTTPoison.get(request, headers),
          {:ok, json} <- Jason.decode(body) do
-      # Get probably totalResults?
       {:ok, Utils.atomize_map_keys(json["articles"])}
     else
-      _error ->
-        {:error}
-    end
+      {:error, %HTTPoison.Response{status_code: 401}} ->
+        {:error, "An error has arisen in the service key, please contact the developer."}
 
-    # TODO: To also secure API Key
+      {:error, %HTTPoison.Response{status_code: 429}} ->
+        {:error, :too_many_calls}
+
+      _ ->
+        {:error, "An error has occured, please try again."}
+    end
   end
 
   defp add_query(uri, %Bite{} = bite) do
-    # TODO: Make page size configurable later
     query =
-      %{language: "en"}
-      |> maybe_add_opt(:search_terms, bite)
+      %{}
+      |> maybe_add_opt(:search_term, bite)
       |> maybe_add_opt(:country, bite)
       |> maybe_add_opt(:category, bite)
       |> Map.put("pageSize", 100)
@@ -53,10 +55,9 @@ defmodule NewsBite.Api.NewsApi do
     Map.put(uri, :query, query)
   end
 
-  defp maybe_add_opt(query, :search_terms, %Bite{search_terms: search_terms})
-       when not is_nil(search_terms) do
-    search_terms = Enum.join(search_terms, " AND ")
-    Map.put(query, :q, search_terms)
+  defp maybe_add_opt(query, :search_term, %Bite{search_term: search_term})
+       when not is_nil(search_term) do
+    Map.put(query, :q, search_term)
   end
 
   defp maybe_add_opt(query, :country, %Bite{country: country}) when not is_nil(country) do
@@ -64,7 +65,13 @@ defmodule NewsBite.Api.NewsApi do
   end
 
   defp maybe_add_opt(query, :category, %Bite{category: category}) when not is_nil(category) do
-    Map.put(query, :category, Atom.to_string(category))
+    query = Map.put(query, :category, Atom.to_string(category))
+
+    if Map.has_key?(query, :country) do
+      query
+    else
+      Map.put(query, :country, "us")
+    end
   end
 
   defp maybe_add_opt(query, _, _), do: query

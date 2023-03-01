@@ -9,7 +9,7 @@ defmodule NewsBite.Bite do
     )
 
     field(:country, Ecto.Enum, values: NewsBite.Utils.Countries.enum())
-    field(:search_terms, {:array, :string})
+    field(:search_term, :string)
     field(:article_groups, {:array, :map}, default: nil)
 
     # These bites are for latest headlines...
@@ -18,7 +18,7 @@ defmodule NewsBite.Bite do
 
   def changeset(struct \\ %Bite{}, attrs) do
     struct
-    |> cast(attrs, [:category, :search_terms, :country])
+    |> cast(attrs, [:category, :search_term, :country])
     |> maybe_generate_uuid()
   end
 
