@@ -1,4 +1,4 @@
-<div>
+<div class="h-screen overflow-y-hidden">
   <%= case @modal_shown do %>
     <% :new_bite_form -> %>
       <%= live_component NewsBiteWeb.Components.NewBiteModal, id: "new_bite_modal" %>
@@ -10,7 +10,7 @@
       <div></div>
   <% end %>
 
-  <div class="flex justify-between w-full bg-slate-300 p-2 pl-4">
+  <div class="fixed flex justify-between w-full bg-slate-300 p-2 pl-4 z-10 shadow">
     <button phx-click="show_empty_bite_form" class="bg-slate-400 p-2 rounded-sm hover:opacity-70"> + New Bite </button>
     <div class="flex gap-2">
       <button phx-click="refresh_all" class="p-2 hover:opacity-70">
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <div class="lg:grid lg:grid-cols-2 lg:auto-rows-max lg:gap-4 p-10 block w-full">
+  <div class="h-full overflow-y-scroll mt-14 pb-20 lg:grid lg:grid-cols-2 lg:auto-rows-max lg:gap-4 p-10 block w-full">
     <%= for {id, bite} <- @bites do %>
       <%= live_component NewsBiteWeb.Components.Bite, id: id, bite: bite %>
     <% end %>

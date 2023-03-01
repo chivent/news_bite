@@ -45,7 +45,7 @@ defmodule NewsBiteWeb.NewsBiteLive do
   @impl true
   def handle_info({"show_flash", {type, message}}, socket) do
     socket.assigns.flash_timer && Process.cancel_timer(socket.assigns.flash_timer)
-    timer_ref = Process.send_after(self(), "hide_flash", 4000)
+    timer_ref = Process.send_after(self(), "hide_flash", 10000)
 
     socket =
       socket
@@ -88,14 +88,21 @@ defmodule NewsBiteWeb.NewsBiteLive do
   end
 
   @impl true
-  def handle_info("bites_refreshed", socket) do
+  def handle_info({"bites_refreshed", status}, socket) do
     send(self(), "close_modal")
-    send(self(), {"show_flash", {:success, "All Bites Refreshed!"}})
 
-    socket =
-      socket
-      |> assign(bites: BiteCache.list_bites() |> Enum.into(%{}))
+    case status do
+      :ok ->
+        send(self(), {"show_flash", {:success, "All Bites Refreshed!"}})
 
+      {:api_error, reason} ->
+        send(
+          self(),
+          {"show_flash", {:error, "Bites could not be fully refreshed as #{reason}"}}
+        )
+    end
+
+    socket = assign(socket, bites: BiteCache.list_bites() |> Enum.into(%{}))
     {:noreply, socket}
   end
 
@@ -108,23 +115,61 @@ defmodule NewsBiteWeb.NewsBiteLive do
   end
 
   @impl true
-  def handle_info({"update_bite", attrs}, socket) do
-    bite = Bites.upsert_bite(attrs)
-    updated_bites = Map.put(socket.assigns.bites, bite.id, bite)
+  def handle_info({"upsert_bite", attrs}, socket) do
+    {result, action} =
+      if Map.get(attrs, "id") == "" do
+        {Bites.create_bite(attrs), "created"}
+      else
+        {Bites.update_bite(attrs), "updated"}
+      end
 
-    send(self(), "close_modal")
-    send(self(), {"show_flash", {:success, "Bite Updated!"}})
+    bite =
+      case result do
+        %Bite{} = bite ->
+          send(self(), {"show_flash", {:success, "Bite #{action}!"}})
+          send(self(), "close_modal")
+          bite
 
-    {:noreply, assign(socket, bites: updated_bites)}
+        {:api_error, bite, reason} ->
+          message =
+            "Bite was #{action}, but news could not be successfully retrieved as #{reason}"
+
+          send(self(), {"show_flash", {:error, message}})
+          send(self(), "close_modal")
+          bite
+
+        _ ->
+          send(self(), {"show_flash", {:error, "An error occured, please try again."}})
+          nil
+      end
+
+    socket =
+      if is_nil(bite) do
+        socket
+      else
+        updated_bites = Map.put(socket.assigns.bites, bite.id, bite)
+        assign(socket, bites: updated_bites)
+      end
+
+    {:noreply, socket}
   end
 
   @impl true
   def handle_info({"refresh_bite", id}, socket) do
-    bite = Bites.upsert_bite_article_groups(id)
+    socket =
+      case Bites.update_bite_news(id) do
+        %Bite{} = bite ->
+          updated_bites = Map.put(socket.assigns.bites, id, bite)
+          send(self(), {"show_flash", {:success, "Bite Updated!"}})
+          assign(socket, bites: updated_bites)
+
+        {:api_error, _, reason} ->
+          send(self(), {"show_flash", {:error, "Bite could not refresh as #{reason}"}})
+          socket
+      end
 
     send_update(NewsBiteWeb.Components.Bite, id: id, loading: false, selected_word_group: nil)
 
-    updated_bites = Map.put(socket.assigns.bites, id, bite)
-    {:noreply, assign(socket, bites: updated_bites)}
+    {:noreply, socket}
   end
 end

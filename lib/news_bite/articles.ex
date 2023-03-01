@@ -9,11 +9,29 @@ end
 defmodule NewsBite.Articles do
   alias NewsBite.Api.NewsApi
   alias NewsBite.Articles
+  alias NewsBite.Utils.Grouping
 
   def get_articles_by_bite(bite) do
-    {:ok, json} = NewsApi.get_news_list(:mock)
+    with {:ok, json} <- NewsApi.get_news_list(bite) do
+      Enum.map(json, &Articles.new_article(&1))
+    else
+      error -> error
+    end
+  end
 
-    Enum.map(json, &Articles.new_article(&1))
+  def get_article_groups(bite) do
+    case get_articles_by_bite(bite) do
+      [] ->
+        []
+
+      {:api_error, reason} ->
+        {:api_error, reason}
+
+      articles ->
+        articles
+        |> articles_into_words()
+        |> Grouping.group_by_top_words()
+    end
   end
 
   @spec new_article(any) :: %{:__struct__ => atom, :id => <<_::288>>, optional(atom) => any}

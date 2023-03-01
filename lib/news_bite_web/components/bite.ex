@@ -14,7 +14,11 @@ defmodule NewsBiteWeb.Components.Bite do
 
   @impl true
   def render(%{bite: bite, selected_word_group: word_group} = assigns) do
-    word_group = word_group || List.first(bite.article_groups)
+    word_group =
+      cond do
+        is_nil(word_group) && not is_nil(bite.article_groups) -> List.first(bite.article_groups)
+        true -> word_group
+      end
 
     ~H"""
     <div class='bg-slate-200 relative rounded-sm'>
@@ -40,25 +44,32 @@ defmodule NewsBiteWeb.Components.Bite do
             </button>
           </div>
         </div>
-        <div class="flex gap-2 flex-wrap">
-          <%= for %{word: word, frequency: frequency} <- bite.article_groups do %>
-          <div class = {"rounded-full px-3 py-1 hover:opacity-70 #{if word == word_group.word, do: 'bg-slate-500 text-white', else: 'bg-slate-300'}"}>
-            <button phx-target={@myself} phx-click="select_word" phx-value-word={word}>
-              <%= word %>
-              <span class={"rounded-full px-2 #{if word == word_group.word, do: 'bg-slate-200 text-black', else: 'bg-slate-500 text-white'}"}> <%= frequency %> </span>
-            </button>
-          </div>
-          <% end %>
-        </div>
+        <%= case bite.article_groups do %>
+          <% [] ->  %>
+            <div class="flex gap-2 flex-wrap"> No articles matching your search were found. </div>
+          <% nil ->  %>
+            <div class="flex gap-2 flex-wrap"> No articles were retrieved due to exceeding the Bite refresh limit. </div>
+          <% _ -> %>
+            <div class="flex gap-2 flex-wrap">
+              <%= for %{word: word, frequency: frequency} <- bite.article_groups do %>
+              <div class = {"rounded-full px-3 py-1 hover:opacity-70 #{if word == word_group.word, do: 'bg-slate-500 text-white', else: 'bg-slate-300'}"}>
+                <button phx-target={@myself} phx-click="select_word" phx-value-word={word}>
+                  <%= word %>
+                  <span class={"rounded-full px-2 #{if word == word_group.word, do: 'bg-slate-200 text-black', else: 'bg-slate-500 text-white'}"}> <%= frequency %> </span>
+                </button>
+              </div>
+              <% end %>
+            </div>
 
-        <div class = "flex flex-col gap-2 pt-4">
-          <%= for article <- word_group.articles do %>
-            <a class = "rounded-sm bg-slate-300 p-2 hover:opacity-80" href={if article.url && bite.id != :mock, do: article.url} target="_blank">
-              <h3 class="text-lg"> <%= article.title %> </h3>
-              <p class="text-sm text-gray-500"> <%= article.description %> </p>
-            </a>
-          <% end %>
-        </div>
+            <div class = "flex flex-col gap-2 pt-4">
+              <%= for article <- word_group.articles do %>
+                <a class = "rounded-sm bg-slate-300 p-2 hover:opacity-80" href={if article.url && bite.id != :mock, do: article.url} target="_blank">
+                  <h3 class="text-lg"> <%= article.title %> </h3>
+                  <p class="text-sm text-gray-500"> <%= article.description %> </p>
+                </a>
+              <% end %>
+            </div>
+        <% end %>
       </div>
     </div>
     """

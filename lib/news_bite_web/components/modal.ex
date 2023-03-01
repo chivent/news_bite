@@ -8,7 +8,7 @@ defmodule NewsBiteWeb.Components.Modal do
     dismissable = Map.get(assigns, :dismissable) || false
 
     ~H"""
-    <div class={if fit, do: "absolute w-full h-full z-10", else: "fixed w-screen h-screen z-10"}>
+    <div class={if fit, do: "absolute w-full h-full z-20", else: "fixed w-screen h-screen z-20"}>
       <%= render_slot(@inner_block) %>
       <div phx-click={if dismissable, do: "close_modal", else: nil} class={if fit, do: "w-full h-full", else: "w-screen h-screen"}} style={"background-color: rgba(0, 0, 0, #{if fit, do: 0.25, else: 0.5});"}> </div>
     </div>
@@ -71,7 +71,7 @@ defmodule NewsBiteWeb.Components.Modal do
             <div class="bg-slate-100 border border-solid border-blue-200 p-4 rounded">
               <p>This app helps you follow the latest news through Bites, groups that highlight the top 10 mentioned words in the 100 newest articles for a certain topic.</p>
             </div>
-            <p class="pt-2 text-base">Every Bite can be created with specific search terms, category and country to search for news in.</p>
+            <p class="pt-2 text-base">Every Bite can be created with specific search terms, category and country (only english speaking countries to facilitate word highlighting) to search for news in.</p>
             <%= live_component NewsBiteWeb.Components.Bite, id: :mock, bite: example_bite %>
             <ul class="list-disc ml-6">
               <li> Word Badge - A top 10 frequently mentioned words and the number of times it has been repeated. Selecting a word lists the articles containing it. </li>

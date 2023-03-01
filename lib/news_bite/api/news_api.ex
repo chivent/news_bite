@@ -10,7 +10,7 @@ defmodule NewsBite.Api.NewsApi do
          {:ok, json} <- Jason.decode(body) do
       {:ok, Utils.atomize_map_keys(json["articles"])}
     else
-      _ -> {:error}
+      _ -> {:api_error, "News not retrieved"}
     end
   end
 
@@ -20,39 +20,44 @@ defmodule NewsBite.Api.NewsApi do
       {"X-Api-Key", @api_key}
     ]
 
-    request =
-      "https://newsapi.org/v2/top-headlines"
-      |> URI.parse()
-      |> add_query(bite)
-      |> URI.to_string()
+    request = build_request(bite)
 
     with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
            HTTPoison.get(request, headers),
          {:ok, json} <- Jason.decode(body) do
       {:ok, Utils.atomize_map_keys(json["articles"])}
     else
-      {:error, %HTTPoison.Response{status_code: 401}} ->
-        {:error, "An error has arisen in the service key, please contact the developer."}
-
-      {:error, %HTTPoison.Response{status_code: 429}} ->
-        {:error, :too_many_calls}
-
-      _ ->
-        {:error, "An error has occured, please try again."}
+      {:error, %HTTPoison.Response{body: body}} ->
+        {:ok, json} = Jason.decode(body)
+        translate_error_message(json["code"])
     end
   end
 
-  defp add_query(uri, %Bite{} = bite) do
+  defp build_request(bite) do
+    url =
+      if Map.get(bite, :country) == nil && Map.get(bite, :category) == nil do
+        "https://newsapi.org/v2/everything"
+      else
+        "https://newsapi.org/v2/top-headlines"
+      end
+
+    url
+    |> URI.parse()
+    |> build_query(bite)
+    |> URI.to_string()
+  end
+
+  defp build_query(url, %Bite{} = bite) do
     query =
       %{}
       |> maybe_add_opt(:search_term, bite)
       |> maybe_add_opt(:country, bite)
       |> maybe_add_opt(:category, bite)
+      |> maybe_add_opt(:language, bite)
       |> Map.put("pageSize", 100)
-      |> Map.put("sortBy", "relevance")
       |> URI.encode_query()
 
-    Map.put(uri, :query, query)
+    Map.put(url, :query, query)
   end
 
   defp maybe_add_opt(query, :search_term, %Bite{search_term: search_term})
@@ -74,5 +79,26 @@ defmodule NewsBite.Api.NewsApi do
     end
   end
 
+  defp maybe_add_opt(query, :language, %Bite{country: nil, category: nil}) do
+    Map.put(query, :language, "en")
+  end
+
   defp maybe_add_opt(query, _, _), do: query
+
+  defp translate_error_message(code) do
+    case code do
+      "apiKeyDisabled" ->
+        {:api_error, "an error has arisen in the service key, please contact the developer."}
+
+      "apiKeyExhausted" ->
+        {:api_error, "the Bite refresh limit has been reached for the day."}
+
+      "rateLimited" ->
+        {:api_error,
+         "too many refreshes have been made in a short period of time. Please wait a bit before trying again."}
+
+      _ ->
+        {:api_error, "an error occured."}
+    end
+  end
 end

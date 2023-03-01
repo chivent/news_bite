@@ -45,22 +45,39 @@ defmodule NewsBite.BiteCache do
     bite
   end
 
+  def upsert_bite({:api_error, %Bite{} = bite, _} = params) do
+    :ets.insert(@namespace, {bite.id, bite})
+    params
+  end
+
   def delete_bite(id) do
     :ets.delete(@namespace, id)
   end
 
-  # TODO: Need a fallback for when news refreshing fails
   @impl true
   def handle_info({:refresh_news, caller_pid}, state) do
-    list_bites()
-    |> Enum.map(fn {_id, bite} -> upsert_bite(bite) end)
+    result =
+      list_bites()
+      |> Enum.reduce_while(:ok, fn {id, _}, _ ->
+        case Bites.update_bite_news(id) do
+          %Bite{} ->
+            {:cont, :ok}
+
+          {:api_error, _, reason} ->
+            {:halt, {:api_error, reason}}
+
+          _ ->
+            {:halt, {:api_error, "an unknown error occured"}}
+        end
+      end)
 
     Process.cancel_timer(state.scheduled)
 
     if caller_pid do
-      Phoenix.PubSub.broadcast(NewsBite.PubSub, "live_update", "bites_refreshed")
+      Phoenix.PubSub.broadcast(NewsBite.PubSub, "live_update", {"bites_refreshed", result})
     else
-      Phoenix.PubSub.broadcast(NewsBite.PubSub, "live_update", "update_available")
+      if result == :ok,
+        do: Phoenix.PubSub.broadcast(NewsBite.PubSub, "live_update", "update_available")
     end
 
     {:noreply, %{scheduled: schedule_news_refresh()}}
