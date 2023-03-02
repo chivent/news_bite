@@ -8,8 +8,6 @@ defmodule NewsBite.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      # NewsBite.Repo,
       # Start the Telemetry supervisor
       NewsBiteWeb.Telemetry,
       # Start the PubSub system

@@ -1,6 +1,9 @@
 defmodule NewsBite.Api.NewsApi do
   alias NewsBite.{Bite, Utils}
 
+  @moduledoc """
+  Handles making requests to NewsAPI
+  """
   @api_key Application.compile_env(:news_bite, :news_api_key)
 
   def get_news_list(:mock) do

@@ -1,8 +1,14 @@
 defmodule NewsBiteWeb.Components.Modal do
+  @moduledoc """
+  Phoenix.Component for Modals
+  """
   alias NewsBiteWeb.Helpers.IconHelper
 
   use Phoenix.Component
 
+  @doc """
+  Renders a translucent black overlay for modals
+  """
   def overlay(assigns) do
     fit = Map.get(assigns, :fit) || false
     dismissable = Map.get(assigns, :dismissable) || false
@@ -15,6 +21,9 @@ defmodule NewsBiteWeb.Components.Modal do
     """
   end
 
+  @doc """
+  Renders a modal to show for loading screens
+  """
   def progress(assigns) do
     fit = Map.get(assigns, :fit) || false
     title = Map.get(assigns, :notice) || "Please Wait..."
@@ -36,6 +45,9 @@ defmodule NewsBiteWeb.Components.Modal do
     """
   end
 
+  @doc """
+  Renders a modal to show for the help screen
+  """
   def help(assigns) do
     example_bite = %NewsBite.Bite{
       id: nil,

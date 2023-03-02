@@ -18,8 +18,6 @@ defmodule NewsBite.DataCase do
 
   using do
     quote do
-      # alias NewsBite.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query

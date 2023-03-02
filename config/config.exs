@@ -7,9 +7,6 @@
 # General application configuration
 import Config
 
-# config :news_bite,
-#   ecto_repos: [NewsBite.Repo]
-
 # Configures the endpoint
 config :news_bite, NewsBiteWeb.Endpoint,
   url: [host: "localhost"],

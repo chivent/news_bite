@@ -1,4 +1,7 @@
 defmodule NewsBiteWeb.Components.NewBiteModal do
+  @moduledoc """
+  LiveComponent handling a form for upserting Bites
+  """
   use NewsBiteWeb, :live_component
   alias NewsBite.Bite
 
@@ -14,21 +17,25 @@ defmodule NewsBiteWeb.Components.NewBiteModal do
 
   @impl true
   def handle_event("upsert_bite", %{"new_bite" => params}, socket) do
+    attrs =
+      params
+      |> Map.take(["category", "country", "id"])
+      |> take_search_term(params)
+
+    send(self(), {"update_bite", attrs})
+    {:noreply, assign(socket, loading: true)}
+  end
+
+  defp take_search_term(attrs, params) do
     search_term =
       params
       |> Map.get("search_term")
       |> String.trim()
 
-    attrs = Map.take(params, ["category", "country", "id"])
-
-    attrs =
-      if search_term != "" do
-        Map.put(attrs, "search_term", search_term)
-      else
-        attrs
-      end
-
-    send(self(), {"update_bite", attrs})
-    {:noreply, assign(socket, loading: true)}
+    if search_term != "" do
+      Map.put(attrs, "search_term", search_term)
+    else
+      attrs
+    end
   end
 end

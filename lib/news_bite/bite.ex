@@ -1,4 +1,7 @@
 defmodule NewsBite.Bite do
+  @moduledoc """
+  The Bite schema.
+  """
   alias __MODULE__
   import Ecto.Changeset
   use Ecto.Schema
@@ -11,17 +14,20 @@ defmodule NewsBite.Bite do
     field(:country, Ecto.Enum, values: NewsBite.Utils.Countries.enum())
     field(:search_term, :string)
     field(:article_groups, {:array, :map}, default: nil)
-
-    # These bites are for latest headlines...
-    # Article limit as an option 100/200/500, auto-refresh rate as an option every 2/4/6/12 hours. Max 4 bites
   end
 
+  @doc """
+  Changeset for updating/creating bites
+  """
   def changeset(struct \\ %Bite{}, attrs) do
     struct
     |> cast(attrs, [:category, :search_term, :country])
     |> maybe_generate_uuid()
   end
 
+  @doc """
+  Changeset for updating article groups
+  """
   def article_groups_changeset(bite, attrs) do
     cast(bite, attrs, [:article_groups])
   end

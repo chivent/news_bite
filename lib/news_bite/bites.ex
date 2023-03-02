@@ -1,16 +1,25 @@
 defmodule NewsBite.Bites do
+  @moduledoc """
+  The Bites context.
+  """
   alias NewsBite.{Articles, Bite, BiteCache}
   alias NewsBite.Utils.Countries
 
   defdelegate get_bite_by_id(id), to: BiteCache, as: :get_bite
   defdelegate delete_bite(id), to: BiteCache
 
+  @doc """
+  Creates a new bite
+  """
   def create_bite(attrs) do
     %Bite{}
     |> upsert_bite(attrs)
     |> BiteCache.upsert_bite()
   end
 
+  @doc """
+  Updates a bite
+  """
   def update_bite(%{"id" => id} = attrs) do
     id
     |> get_bite_by_id()
@@ -18,6 +27,9 @@ defmodule NewsBite.Bites do
     |> BiteCache.upsert_bite()
   end
 
+  @doc """
+  Updates a bite's article groups
+  """
   def update_bite_news(id) do
     result =
       id
@@ -28,6 +40,9 @@ defmodule NewsBite.Bites do
     result
   end
 
+  @doc """
+  Builds a descriptive name for a bite
+  """
   def get_bite_title(bite) do
     category =
       if bite.category do
@@ -55,7 +70,7 @@ defmodule NewsBite.Bites do
   end
 
   defp upsert_bite_article_groups(%Bite{} = bite) do
-    with article_groups when is_list(article_groups) <- Articles.get_article_groups(bite) do
+    with article_groups when is_list(article_groups) <- Articles.get_latest_article_groups(bite) do
       bite
       |> Bite.article_groups_changeset(%{article_groups: article_groups})
       |> Ecto.Changeset.apply_changes()

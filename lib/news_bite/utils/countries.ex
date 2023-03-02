@@ -1,4 +1,11 @@
 defmodule NewsBite.Utils.Countries do
+  @moduledoc """
+  Utils for working with countries
+  """
+
+  @doc """
+  Returns a list of countries and their associated codes
+  """
   def list do
     [
       None: nil,
@@ -59,11 +66,17 @@ defmodule NewsBite.Utils.Countries do
     ]
   end
 
+  @doc """
+  Returns a full list of country codes
+  """
   def enum do
     list()
     |> Keyword.values()
   end
 
+  @doc """
+  Returns a country code's associated name
+  """
   def get_name_by_code(code) do
     list()
     |> Enum.find_value(fn {key, value} -> if value == code, do: key end)

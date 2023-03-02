@@ -1,4 +1,9 @@
 defmodule NewsBite.BiteCache do
+  @moduledoc """
+  ETS Cache provided to store Bites.
+  Bites are stored as the value, with the bite's id as the key.
+  """
+
   @namespace :bite_cache
 
   alias NewsBite.{Bite, Bites}
