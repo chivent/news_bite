@@ -33,6 +33,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :news_bite, news_api_key: System.get_env("NEWS_API_KEY")
+config :news_bite, news_api_url: "https://newsapi.org/v2"
 
 config :tailwind,
   version: "3.2.4",

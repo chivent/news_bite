@@ -17,7 +17,7 @@ defmodule NewsBite.Utils do
   def atomize_map_keys(arg), do: arg
 
   @doc """
-  Adds an empty option for select options
+  Adds an empty option to a list of values: To be used in options tag
   """
   def optional_options(options) do
     options = Enum.map(options, &{&1, &1})

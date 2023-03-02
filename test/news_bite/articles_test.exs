@@ -1,16 +1,36 @@
 defmodule NewsBite.ArticlesTest do
   use ExUnit.Case, async: true
-  alias NewsBite.{Article, Articles}
+  alias NewsBite.{Article, Articles, Bite}
 
-  test "get_articles_by_bite/1 returns articles based on a bite" do
-    # TODO
+  describe "get_latest_article_groups/1" do
+    test "on success returns bite's latest articles grouped by words" do
+      article_groups =
+        %Bite{search_term: "x2"}
+        |> Articles.get_latest_article_groups()
+
+      {first_group, rest} = List.pop_at(article_groups, 0)
+      assert %NewsBite.ArticleGroup{word: "title", frequency: 2} = first_group
+
+      {first_group, rest} = List.pop_at(rest, 0)
+      assert %NewsBite.ArticleGroup{word: "description", frequency: 2} = first_group
+
+      {first_group, rest} = List.pop_at(rest, 0)
+      assert %NewsBite.ArticleGroup{word: "x22", frequency: 1} = first_group
+
+      {first_group, rest} = List.pop_at(rest, 0)
+      assert %NewsBite.ArticleGroup{word: "x2", frequency: 1} = first_group
+    end
+
+    test "on failure: returns error" do
+      error = %Bite{search_term: "failure:unknown"} |> Articles.get_latest_article_groups()
+      assert {:api_error, _reason} = error
+    end
   end
 
   test "new_article/1 defines a new article struct" do
     params = %{
       title: "New Title",
       description: "Description",
-      content: "Content",
       url: "www.test.com",
       unknown: ""
     }
@@ -21,35 +41,14 @@ defmodule NewsBite.ArticlesTest do
     assert %Article{} = article
     assert Map.get(article, :title) == "New Title"
     assert Map.get(article, :description) == "Description"
-    assert Map.get(article, :content) == "Content"
     assert Map.get(article, :url) == "www.test.com"
   end
 
-  test "articles_into_words/1 turns a list of articles into words" do
-    articles = [
-      %Article{id: 1, title: "This is a title 1", description: "This is a description"},
-      %Article{id: 2, title: "This is a title 2", description: nil}
-    ]
+  defp generate_article(title) do
+    attrs =
+      NewsBite.Api.MockNewsApi.article_template(title)
+      |> NewsBite.Utils.atomize_map_keys()
 
-    result = Articles.articles_into_words(articles)
-
-    expected = [
-      {1, "this"},
-      {1, "is"},
-      {1, "a"},
-      {1, "title"},
-      {1, "1"},
-      {1, "this"},
-      {1, "is"},
-      {1, "a"},
-      {1, "description"},
-      {2, "this"},
-      {2, "is"},
-      {2, "a"},
-      {2, "title"},
-      {2, "2"}
-    ]
-
-    assert Enum.sort(result) == Enum.sort(expected)
+    struct(%NewsBite.Article{}, attrs)
   end
 end

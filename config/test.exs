@@ -25,3 +25,5 @@ config :logger, level: :warn
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :news_bite, news_api_url: "http://localhost:8000"

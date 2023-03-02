@@ -19,7 +19,7 @@ defmodule NewsBite.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {NewsBite.Application, []},
+      mod: {NewsBite.Application, [env: Mix.env()]},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -49,7 +49,7 @@ defmodule NewsBite.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 2.0"},
-      {:tailwind, "~> 0.1.9", only: :dev}
+      {:tailwind, "~> 0.1.9"}
     ]
   end
 

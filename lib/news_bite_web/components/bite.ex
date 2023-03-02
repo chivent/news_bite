@@ -1,4 +1,7 @@
 defmodule NewsBiteWeb.Components.Bite do
+  @moduledoc """
+  LiveComponent for Bite
+  """
   use NewsBiteWeb, :live_component
   alias NewsBite.Bites
 

@@ -27,4 +27,9 @@ defmodule NewsBite.UtilsTest do
       assert ["test"] = result
     end
   end
+
+  test "optional_options/1 adds an empty option to a list of select options" do
+    result = Utils.optional_options(["A", "B"])
+    assert [{"None", nil}, {"A", "A"}, {"B", "B"}] = result
+  end
 end

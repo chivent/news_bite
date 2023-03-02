@@ -5,19 +5,12 @@ defmodule NewsBite.Api.NewsApi do
   Handles making requests to NewsAPI
   """
   @api_key Application.compile_env(:news_bite, :news_api_key)
+  @base_url Application.compile_env(:news_bite, :news_api_url)
 
-  def get_news_list(:mock) do
-    filename = Application.app_dir(:news_bite, "priv/static/mock_news_source.json")
-
-    with {:ok, body} <- File.read(filename),
-         {:ok, json} <- Jason.decode(body) do
-      {:ok, Utils.atomize_map_keys(json["articles"])}
-    else
-      _ -> {:api_error, "News not retrieved"}
-    end
-  end
-
-  def get_news_list(bite) do
+  @doc """
+  Retrieves the latest news from NewsAPI based on a bite's properties
+  """
+  def get_news_list(%Bite{} = bite) do
     headers = [
       {"Content-Type", "application/json"},
       {"X-Api-Key", @api_key}
@@ -30,7 +23,7 @@ defmodule NewsBite.Api.NewsApi do
          {:ok, json} <- Jason.decode(body) do
       {:ok, Utils.atomize_map_keys(json["articles"])}
     else
-      {:error, %HTTPoison.Response{body: body}} ->
+      {_, %HTTPoison.Response{body: body}} ->
         {:ok, json} = Jason.decode(body)
         translate_error_message(json["code"])
     end
@@ -39,9 +32,9 @@ defmodule NewsBite.Api.NewsApi do
   defp build_request(bite) do
     url =
       if Map.get(bite, :country) == nil && Map.get(bite, :category) == nil do
-        "https://newsapi.org/v2/everything"
+        "#{@base_url}/everything"
       else
-        "https://newsapi.org/v2/top-headlines"
+        "#{@base_url}/top-headlines"
       end
 
     url

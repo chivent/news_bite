@@ -86,7 +86,7 @@ defmodule NewsBiteWeb.Components.Modal do
             <p class="pt-2 text-base">Every Bite can be created with specific search terms, category and country (only english speaking countries to facilitate word highlighting) to search for news in.</p>
             <%= live_component NewsBiteWeb.Components.Bite, id: :mock, bite: example_bite %>
             <ul class="list-disc ml-6">
-              <li> Word Badge - A top 10 frequently mentioned words and the number of times it has been repeated. Selecting a word lists the articles containing it. </li>
+              <li> Word Badge - A top 10 frequently mentioned words and the number of articles containing it. Selecting a word lists the articles containing it. </li>
               <li> <p class="flex items-end"> <%= IconHelper.icon_tag(NewsBiteWeb.Endpoint, "refresh", class: "h-5 w-5") %> - Click to retrieve the latest news for this bite. </p> </li>
               <li> <p class="flex items-end"> <%= IconHelper.icon_tag(NewsBiteWeb.Endpoint, "edit", class: "h-5 w-5") %> - Click to update the search terms of the bite. </p> </li>
               <li> <p class="flex items-end"> <%= IconHelper.icon_tag(NewsBiteWeb.Endpoint, "delete", class: "h-5 w-5") %> - Click to remove the bite. </p></li>

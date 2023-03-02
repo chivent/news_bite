@@ -2,7 +2,7 @@ defmodule NewsBite.Article do
   @moduledoc """
   The Article struct.
   """
-  defstruct [:id, :title, :description, :content, :url]
+  defstruct [:id, :title, :description, :url]
 end
 
 defmodule NewsBite.ArticleGroup do

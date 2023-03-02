@@ -6,18 +6,25 @@ defmodule NewsBite.Application do
   use Application
 
   @impl true
-  def start(_type, _args) do
+  def start(_type, args) do
     children = [
       # Start the Telemetry supervisor
       NewsBiteWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: NewsBite.PubSub},
       # Start the Endpoint (http/https)
-      NewsBiteWeb.Endpoint,
-      # Start a worker by calling: NewsBite.Worker.start_link(arg)
-      # {NewsBite.Worker, arg}
-      NewsBite.BiteCache
+      NewsBiteWeb.Endpoint
     ]
+
+    children =
+      if match?([env: :test], args) do
+        [
+          {Plug.Cowboy, scheme: :http, plug: NewsBite.Api.MockNewsApi, options: [port: 8000]}
+          | children
+        ]
+      else
+        [NewsBite.BiteCache | children]
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

@@ -28,8 +28,6 @@ defmodule NewsBite.BiteCache do
     ArgumentError -> {:error, :already_started}
   end
 
-  def pid(), do: self()
-
   def list_bites() do
     :ets.tab2list(@namespace)
   end
@@ -55,6 +53,8 @@ defmodule NewsBite.BiteCache do
     params
   end
 
+  def upsert_bite(params), do: params
+
   def delete_bite(id) do
     :ets.delete(@namespace, id)
   end
@@ -76,7 +76,7 @@ defmodule NewsBite.BiteCache do
         end
       end)
 
-    Process.cancel_timer(state.scheduled)
+    if Map.has_key?(state, :scheduled), do: Process.cancel_timer(state.scheduled)
 
     if caller_pid do
       Phoenix.PubSub.broadcast(NewsBite.PubSub, "live_update", {"bites_refreshed", result})
