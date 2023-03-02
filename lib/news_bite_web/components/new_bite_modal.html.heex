@@ -9,9 +9,14 @@
           </button>
           <%= submit "#{if Map.get(@bite, :id), do: 'Update Bite', else: '+ Create Bite' }", class: "hover:opacity-70 rounded-sm bg-slate-300 p-2" %>
         </div>
+
+        <div class={"italic #{if @show_error, do: 'font-bold text-red-500', else: 'text-gray-500'}"}>
+          <p>Please fill in at least one field.</p>
+        </div>
+
         <div class="flex flex-col">
           <%= hidden_input :new_bite, :id, value: @bite.id %>
-          <%= label :new_bite, :search_term, class: "pb-2 text-xs uppercase text-gray-700 font-bold" %>
+          <%= label :new_bite, :search_term, class: "pt-4 pb-2 text-xs uppercase text-gray-700 font-bold" %>
           <%= text_input :new_bite, :search_term, class: "rounded-sm" %>
           <%= label :new_bite, :country, class: "py-2 pt-4 text-xs uppercase text-gray-700 font-bold" %>
           <%= select :new_bite, :country, NewsBite.Utils.Countries.list(), value: @bite.country, class: "rounded-sm" %>

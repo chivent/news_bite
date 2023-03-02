@@ -147,6 +147,7 @@ defmodule NewsBiteWeb.NewsBiteLive do
       if is_nil(bite) do
         socket
       else
+        send_update(NewsBiteWeb.Components.Bite, id: bite.id, selected_word_group: nil)
         updated_bites = Map.put(socket.assigns.bites, bite.id, bite)
         assign(socket, bites: updated_bites)
       end
