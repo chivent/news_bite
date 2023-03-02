@@ -10,6 +10,7 @@ defmodule NewsBite.BiteCache do
 
   use GenServer
 
+  @spec start_link(any) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(_attrs) do
     GenServer.start_link(__MODULE__, %{}, name: @namespace)
   end

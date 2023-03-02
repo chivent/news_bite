@@ -32,9 +32,9 @@ defmodule NewsBite.Api.NewsApi do
   defp build_request(bite) do
     url =
       if Map.get(bite, :country) == nil && Map.get(bite, :category) == nil do
-        "#{@base_url}/everything"
+        "#{@base_url}/everything/"
       else
-        "#{@base_url}/top-headlines"
+        "#{@base_url}/top-headlines/"
       end
 
     url
